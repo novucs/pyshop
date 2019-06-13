@@ -91,7 +91,7 @@ def dispose_engine():
 
 class Permission(Base):
     """Describe a user permission"""
-    name = Column(Unicode(255), nullable=False, unique=True)
+    name = Column(UnicodeText(), nullable=False, unique=True)
 
 
 group__permission = Table('group__permission', Base.metadata,
@@ -105,7 +105,7 @@ class Group(Base):
     """
     Describe user's groups.
     """
-    name = Column(Unicode(255), nullable=False, unique=True)
+    name = Column(UnicodeText(), nullable=False, unique=True)
     permissions = relationship(Permission, secondary=group__permission,
                                lazy='select')
 
@@ -148,12 +148,12 @@ class User(Base):
                  }
                 )
 
-    login = Column(Unicode(255), nullable=False)
+    login = Column(UnicodeText(), nullable=False)
     _password = Column('password', Unicode(60), nullable=True)
 
-    firstname = Column(Unicode(255), nullable=True)
-    lastname = Column(Unicode(255), nullable=True)
-    email = Column(Unicode(255), nullable=True)
+    firstname = Column(UnicodeText(), nullable=True)
+    lastname = Column(UnicodeText(), nullable=True)
+    email = Column(UnicodeText(), nullable=True)
     groups = relationship(Group, secondary=user__group, lazy='joined',
                           backref='users')
 
@@ -411,7 +411,7 @@ class Classifier(Base):
                  }
                 )
 
-    name = Column(Unicode(255), nullable=False, unique=True)
+    name = Column(UnicodeText(), nullable=False, unique=True)
     parent_id = Column(Integer, ForeignKey(u'classifier.id'))
     category = Column(Unicode(80), nullable=False)
 
@@ -669,7 +669,7 @@ class Release(Base):
                 )
 
     version = Column(Unicode(60), nullable=False)
-    summary = Column(Unicode(255))
+    summary = Column(UnicodeText())
     downloads = Column(Integer, default=0)
 
     package_id = Column(Integer, ForeignKey(Package.id),
@@ -677,10 +677,10 @@ class Release(Base):
     author_id = Column(Integer, ForeignKey(User.id))
     maintainer_id = Column(Integer, ForeignKey(User.id))
     stable_version = Column(Unicode(60))
-    home_page = Column(Unicode(255))
+    home_page = Column(UnicodeText())
     license = Column(UnicodeText())
     description = Column(UnicodeText())
-    keywords = Column(Unicode(255))
+    keywords = Column(UnicodeText())
     platform = Column(Unicode(80))
     download_url = Column(Unicode(800))
     bugtrack_url = Column(Unicode(800))
